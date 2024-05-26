@@ -11,15 +11,15 @@ and administration.
 ## Examples of Project Running
 
 ### Competition Setup
-<img src="../../IdeaProjects/JComp/images/setup.png" alt="setup image">
+<img src="images/setup.png" alt="setup image">
 
 ### Setup Problem List
-<img src="../../IdeaProjects/JComp/images/problems.png" alt="problems image">
+<img src="images/problems.png" alt="problems image">
 
 ### Admin Interfaces (after competition starts)
-<img src="../../IdeaProjects/JComp/images/adminHome.png" alt="admin home image">
-<img src="../../IdeaProjects/JComp/images/results.png" alt="results image">
+<img src="images/adminHome.png" alt="admin home image">
+<img src="images/results.png" alt="results image">
 
 ### User Interfaces
-<img src="../../IdeaProjects/JComp/images/timeleft.png" alt="time left image">
-<img src="../../IdeaProjects/JComp/images/submission.png" alt="submission image">
+<img src="images/timeleft.png" alt="time left image">
+<img src="images/submission.png" alt="submission image">
