@@ -1,0 +1,33 @@
+body {
+    display: grid;
+    grid-template-columns: auto 800px auto;
+    grid-template-rows: auto;
+    grid-template-areas:
+            "header header header"
+            ".      info   ."
+            ".      downloads  .";
+}
+
+
+.infoDiv {
+    grid-area: info;
+}
+
+.downloadsDiv {
+    grid-area: downloads;
+}
+
+.downloadsDiv > div {
+    background-color: var(--color-field);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    width: 200px;
+    padding: 5px;
+    margin: 5px;
+
+
+}
+
+.downloadsDiv > div > a {
+    font-size: 20px;
+}

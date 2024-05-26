@@ -1,0 +1,41 @@
+:root {
+    --color-background: #0f0f11;
+    --color-field: #373b46;
+    --color-border: #2b2d30;
+    --color-text-default: #ced0d6;
+    --color-text-error : #b41111;
+    --font-default: "Dosis", sans-serif;
+}
+
+body {
+    background-color: var(--color-background);
+    color: var(--color-text-default);
+    font-family: var(--font-default);
+}
+.navBar {
+    grid-area: header;
+    justify-self: stretch;
+    align-self: start;
+    height: 50px;
+}
+.navBar > a {
+    padding: 8px 10px;
+    font-size: 20px;
+    border :2px;
+}
+
+table {
+    border-collapse: collapse;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: #FFFFFF;
+    background-color: #000000;
+    width : 100%;
+}
+
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+}
