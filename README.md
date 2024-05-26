@@ -1,5 +1,5 @@
 # Apache Tomcat Server For Java Competitions
-*This repo was created as a storage/backup, code will likely not run on your machine
+
 ## Summary 
 The project is an Apache Tomcat server that hosts a java coding competition. 
 It uses a SQLite database to maintain state and manages a unique session for all users. 
