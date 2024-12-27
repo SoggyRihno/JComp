@@ -20,14 +20,16 @@ public class WelcomeServlet extends HttpServlet {
         try {
             if (!SQLiteManager.isDataBaseSetUp())
                 SQLiteManager.createDatabase();
+
             if (!SQLiteManager.isContestRunning()) {
-                res.sendRedirect("/Gradle___me_nslot___JComp_1_0_SNAPSHOT_war/setup.jsp");
+                res.sendRedirect(req.getContextPath() + "/setup.jsp");
                 return;
             }
 
-            res.sendRedirect("/Gradle___me_nslot___JComp_1_0_SNAPSHOT_war/login.jsp");
+            res.sendRedirect(req.getContextPath() + "/login.jsp");
         } catch (SQLException e) {
             throw new ServletException(e);
         }
     }
+
 }

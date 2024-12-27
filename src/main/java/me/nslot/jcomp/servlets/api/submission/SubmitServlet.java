@@ -57,9 +57,9 @@ public class SubmitServlet extends HttpServlet {
             } catch (SQLException e) {
                 throw new ServletException(e);
             }
-            res.sendRedirect("/Gradle___me_nslot___JComp_1_0_SNAPSHOT_war/submission.jsp?loginID=" + loginID);
+            res.sendRedirect(req.getContextPath() +"submission.jsp?loginID=" + loginID);
         } else {
-            res.sendRedirect("/Gradle___me_nslot___JComp_1_0_SNAPSHOT_war/login.jsp");
+            res.sendRedirect(req.getContextPath() +"login.jsp");
         }
     }
 

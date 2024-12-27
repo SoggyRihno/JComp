@@ -26,6 +26,6 @@ public class ContestLengthServlet extends HttpServlet {
                 throw new ServletException(e);
             }
         }
-        res.sendRedirect("/Gradle___me_nslot___JComp_1_0_SNAPSHOT_war/");
+        res.sendRedirect(req.getContextPath());
     }
 }

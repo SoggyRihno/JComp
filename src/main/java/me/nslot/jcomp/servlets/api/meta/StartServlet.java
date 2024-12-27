@@ -22,7 +22,7 @@ public class StartServlet extends HttpServlet {
             int teams = SQLiteManager.getTeamNumber();
             for (int i = 1; i <= teams; i++)
                 SQLiteManager.addUser("team" +i, UUID.randomUUID().toString().substring(0,11));
-            res.sendRedirect("/Gradle___me_nslot___JComp_1_0_SNAPSHOT_war/");
+            res.sendRedirect(req.getContextPath());
 
         } catch (SQLException e) {
             throw new ServletException(e);
