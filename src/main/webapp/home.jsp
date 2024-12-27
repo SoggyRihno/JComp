@@ -19,7 +19,7 @@
     String username = SQLiteManager.getUsername(loginID);
 
     if (loginID == null || username == null) {
-        response.sendRedirect("/Gradle___me_nslot___JComp_1_0_SNAPSHOT_war/login.jsp");
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
         return;
     }
 
@@ -99,8 +99,8 @@
                 sb.append(String.format("<td>%s:%s</td>", LocalDateTime.parse(s.time()).getHour(), LocalDateTime.parse(s.time()).getMinute()));
                 sb.append(String.format("<td>%s</td>", SQLiteManager.getProblemByID(s.problemID()).name()));
                 sb.append(String.format("<td>%s</td>", s.status() == 0 ? "Not Judged" : s.status() == 1 ? "Pass" : "Fail"));
-                sb.append(String.format("<td><a  href=\"/Gradle___me_nslot___JComp_1_0_SNAPSHOT_war/api/submission/code?loginID=%s&submissionID=%s\">View Code</a>\n</td>", loginID, s.submissionID()));
-                sb.append(String.format("<td><a  href=\"/Gradle___me_nslot___JComp_1_0_SNAPSHOT_war/api/submission/answer?loginID=%s&submissionID=%s\">View Answer</a>\n</td>", loginID, s.submissionID()));
+                sb.append(String.format("<td><a  href=\"" + request.getContextPath() + "/api/submission/code?loginID=%s&submissionID=%s\">View Code</a>\n</td>", loginID, s.submissionID()));
+                sb.append(String.format("<td><a  href=\"" + request.getContextPath() + "/api/submission/answer?loginID=%s&submissionID=%s\">View Answer</a>\n</td>", loginID, s.submissionID()));
                 sb.append("</tr>");
             }
         %>

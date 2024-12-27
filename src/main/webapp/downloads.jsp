@@ -7,7 +7,7 @@
     String username = SQLiteManager.getUsername(loginID);
 
     if (loginID == null || username == null) {
-        response.sendRedirect("/Gradle___me_nslot___JComp_1_0_SNAPSHOT_war/login.jsp");
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
         return;
     }
 

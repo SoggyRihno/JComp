@@ -46,7 +46,7 @@ public class SubmitServlet extends HttpServlet {
             try {
                 if (!problemID.equals("null")) {
                     Problem problem = SQLiteManager.getProblemByID(problemID);
-                    String answer = judge(code, problem);
+                    String answer = judgeSubmission(code, problem);
                     int status = answer.trim().equals(problem.output()) ? 1 : 2;
 
                     Submission submission
@@ -57,59 +57,66 @@ public class SubmitServlet extends HttpServlet {
             } catch (SQLException e) {
                 throw new ServletException(e);
             }
-            res.sendRedirect(req.getContextPath() +"submission.jsp?loginID=" + loginID);
+            res.sendRedirect(req.getContextPath() +"/submission.jsp?loginID=" + loginID);
         } else {
-            res.sendRedirect(req.getContextPath() +"login.jsp");
+            res.sendRedirect(req.getContextPath() +"/login.jsp");
         }
     }
 
-    private static String judge(String code, Problem problem) {
+    private String judgeSubmission(String code, Problem problem) {
+        File tempDir = null;
         try {
-            File folder = Files.createTempDirectory("TempDir").toFile();
-            File classFile = new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\Gradle___me_nslot___JComp_1_0_SNAPSHOT_war\\WEB-INF\\classes\\me\\nslot\\jcomp",problem.name()+".class");
-            if (classFile.exists())
-                classFile.delete();
+            tempDir = Files.createTempDirectory("submission-judging").toFile();
 
-            File codeFile = new File(folder, problem.name() + ".java");
-            PrintWriter pw = new PrintWriter(codeFile);
-            pw.write(code);
-            pw.close();
-
-            File inputFile = new File(folder, "input.txt");
-            pw = new PrintWriter(inputFile);
-            pw.write(problem.input());
-            pw.close();
+            File sourceFile = new File(tempDir, problem.name() + ".java");
+            try (PrintWriter writer = new PrintWriter(sourceFile)) {
+                writer.write(code);
+            }
 
             JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
             DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
-            StandardJavaFileManager manager = compiler.getStandardFileManager(
-                    diagnostics, null, null);
-            Iterable<? extends JavaFileObject> source = manager.getJavaFileObjects(codeFile);
-            compiler.getTask(null, manager, null, null, null, source).call();
 
-            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            PrintStream ps = new PrintStream(baos, true, StandardCharsets.UTF_8);
-            System.out.flush();
-            System.setOut(ps);
+            try (StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null)) {
+                Iterable<? extends JavaFileObject> sources = fileManager.getJavaFileObjects(sourceFile);
+                boolean success = compiler.getTask(null, fileManager, diagnostics, null, null, sources).call();
 
-            URLClassLoader classLoader = new URLClassLoader(new URL[]{folder.toURI().toURL()}, Thread.currentThread().getContextClassLoader());
-            Class<?> c = Class.forName(problem.name(), true, classLoader);
-            Method main = c.getDeclaredMethod("main", String[].class);
-            Object[] args = new Object[1];
-            args[0] = new String[]{folder.getAbsolutePath()+"\\"};
-            main.invoke(null, args);
+                if (!success) {
+                    return "Compilation failed: " + diagnostics.getDiagnostics().toString();
+                }
+            }
 
-            System.setOut(System.out);
-            ps.close();
-            manager.close();
-            classFile.delete();
-            codeFile.delete();
-            inputFile.delete();
-            folder.delete();
-            return baos.toString(StandardCharsets.UTF_8);
-        } catch (IOException | ClassNotFoundException | InvocationTargetException | NoSuchMethodException |
-                 IllegalAccessException e) {
-            return "Running Submission resulted in an exception";
+            File inputFile = new File(tempDir, "input.txt");
+            try (PrintWriter inputWriter = new PrintWriter(inputFile)) {
+                inputWriter.write(problem.input());
+            }
+
+            ByteArrayOutputStream outputCapture = new ByteArrayOutputStream();
+            try (PrintStream ps = new PrintStream(outputCapture, true, StandardCharsets.UTF_8)) {
+                System.setOut(ps);
+
+                URLClassLoader classLoader = new URLClassLoader(new URL[]{tempDir.toURI().toURL()});
+                Class<?> cls = Class.forName(problem.name(), true, classLoader);
+
+                Method mainMethod = cls.getDeclaredMethod("main", String[].class);
+                mainMethod.invoke(null, (Object) new String[]{tempDir.getAbsolutePath()});
+            }
+
+            return outputCapture.toString(StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            return "Error during execution: " + e.getMessage();
+        } finally {
+            if (tempDir != null) {
+                deleteDirectory(tempDir);
+            }
         }
+    }
+
+    private void deleteDirectory(File directory) {
+        if (directory.isDirectory()) {
+            for (File file : directory.listFiles()) {
+                deleteDirectory(file);
+            }
+        }
+        directory.delete();
     }
 }

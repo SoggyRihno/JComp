@@ -110,8 +110,8 @@
                 sb.append(String.format("<td>%s</td>", p.name()));
                 sb.append(String.format("<td>%s</td>", p.value()));
                 sb.append(String.format("<td>%s</td>", p.UUID()));
-                sb.append(String.format("<td><a href=\"/Gradle___me_nslot___JComp_1_0_SNAPSHOT_war/api/problem/view?problemID=%s\">View Problem</a>\n</td>", p.UUID()));
-                sb.append(String.format("<td> <button onclick='(function(){if (confirm(\"Delete Problem\")) {fetch(\"/Gradle___me_nslot___JComp_1_0_SNAPSHOT_war/api/problem/delete?problemID=%s\", {method: \"POST\"}).then(() =>window.location.reload())}})()'> Delete Problem</button> </td>", p.UUID()));
+                sb.append(String.format("<td><a href=\"" + request.getContextPath() + "/api/problem/view?problemID=%s\">View Problem</a>\n</td>", p.UUID()));
+                sb.append(String.format("<td> <button onclick='(function(){if (confirm(\"Delete Problem\")) {fetch(\"" + request.getContextPath() + "/api/problem/delete?problemID=%s\", {method: \"POST\"}).then(() =>window.location.reload())}})()'> Delete Problem</button> </td>", p.UUID()));
                 sb.append("</tr>");
 
             }

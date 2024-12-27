@@ -43,6 +43,6 @@ public class ViewAnswerServlet extends HttpServlet {
                 throw new ServletException(e);
             }
         }
-        res.sendRedirect(req.getContextPath() +"admin/submissions.jsp?loginID=" + loginID);
+        res.sendRedirect(req.getContextPath() +"/admin/submissions.jsp?loginID=" + loginID);
     }
 }

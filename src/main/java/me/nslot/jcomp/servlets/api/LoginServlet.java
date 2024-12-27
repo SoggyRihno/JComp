@@ -30,14 +30,14 @@ public class LoginServlet extends HttpServlet {
                 SQLiteManager.addSession(session);
 
                 if (user.admin())
-                    res.sendRedirect(req.getContextPath() + "admin/home.jsp?loginID="+session.loginID());
+                    res.sendRedirect(req.getContextPath() + "/admin/home.jsp?loginID="+session.loginID());
                 else
-                    res.sendRedirect(req.getContextPath() +"home.jsp?loginID="+session.loginID());
+                    res.sendRedirect(req.getContextPath() +"/home.jsp?loginID="+session.loginID());
                 return;
             }
         } catch (SQLException e) {
             throw new ServletException(e);
         }
-        res.sendRedirect(req.getContextPath() + "login.jsp");
+        res.sendRedirect(req.getContextPath() + "/login.jsp");
     }
 }
