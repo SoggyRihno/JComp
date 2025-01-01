@@ -18,13 +18,12 @@ A Java and Tomcat-based server application designed for UIL competitions, with S
 ### Clone the Repository
 
 1. Open a terminal or command prompt.
-2. Ensure Git is installed on your system. If not, [install Git](https://git-scm.com/).
-3. Clone the repository from GitHub using the following command:
+2. Clone the repository from GitHub using the following command:
    ```
    git clone <repository-url>
    ```
    Replace `<repository-url>` with the URL of the repository.
-4. Navigate to the cloned directory by running:
+3. Navigate to the cloned directory by running:
    ```
    cd <repository-name>
    ```
